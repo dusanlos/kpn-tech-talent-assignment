@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.kpn.assignment.backend.service.UserDetailsServiceImpl;
+
 import io.micrometer.common.lang.NonNull;
 
 import java.io.IOException;

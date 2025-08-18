@@ -1,4 +1,4 @@
-package com.kpn.assignment.backend.security;
+package com.kpn.assignment.backend.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

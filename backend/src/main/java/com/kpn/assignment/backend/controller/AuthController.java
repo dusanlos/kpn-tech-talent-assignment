@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kpn.assignment.backend.model.User;
 import com.kpn.assignment.backend.repository.UserRepository;
 import com.kpn.assignment.backend.security.JwtUtil;
-import com.kpn.assignment.backend.security.UserDetailsServiceImpl;
+import com.kpn.assignment.backend.service.UserDetailsServiceImpl;
 
 @RestController
 @RequestMapping("/auth")
