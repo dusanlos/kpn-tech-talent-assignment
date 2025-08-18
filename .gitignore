@@ -1,0 +1,7 @@
+# Database files
+database.db
+database.db-*
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
