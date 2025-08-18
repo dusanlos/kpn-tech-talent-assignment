@@ -2,9 +2,10 @@ package com.kpn.assignment.backend.controller;
 
 import com.kpn.assignment.backend.model.Customer;
 import com.kpn.assignment.backend.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +22,9 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
+        Customer savedCustomer = customerService.saveCustomer(customer);
+        return ResponseEntity.ok(savedCustomer);
     }
 
     @GetMapping
@@ -43,15 +45,15 @@ public class CustomerController {
                     .map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
         }
-    
+
         if (!isEmpty(email)) {
             return customerService.getCustomerByEmail(email)
                     .map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
         }
-    
+
         List<Customer> result = List.of();
-    
+
         if (!isEmpty(firstName) && !isEmpty(lastName)) {
             result = customerService.searchByFullName(firstName, lastName);
         } else if (!isEmpty(firstName)) {
@@ -61,25 +63,30 @@ public class CustomerController {
         } else if (!isEmpty(address)) {
             result = customerService.searchByAddress(address);
         }
-    
+
         if (result.isEmpty()) {
             return ResponseEntity.badRequest().body("At least one valid search parameter is required");
         }
-    
+
         return ResponseEntity.ok(result);
     }
-    
+
     private boolean isEmpty(String value) {
         return value == null || value.isBlank();
     }
 
     @GetMapping("/{id}")
-    public Optional<Customer> getCustomerById(@PathVariable Long id) {
-        return customerService.getCustomerById(id);
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer updatedCustomer) {
+    public ResponseEntity<Customer> updateCustomer(
+            @PathVariable Long id, 
+            @Valid @RequestBody Customer updatedCustomer
+    ) {
         Optional<Customer> existing = customerService.getCustomerById(id);
         if (existing.isPresent()) {
             Customer customer = existing.get();
@@ -88,14 +95,16 @@ public class CustomerController {
             customer.setAddress(updatedCustomer.getAddress());
             customer.setPhoneNumber(updatedCustomer.getPhoneNumber());
             customer.setEmail(updatedCustomer.getEmail());
-            return customerService.saveCustomer(customer);
+            Customer saved = customerService.saveCustomer(customer);
+            return ResponseEntity.ok(saved);
         } else {
-            throw new RuntimeException("Customer not found");
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
+        return ResponseEntity.noContent().build();
     }
 }
