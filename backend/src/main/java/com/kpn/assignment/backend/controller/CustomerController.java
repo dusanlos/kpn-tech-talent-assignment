@@ -1,5 +1,6 @@
 package com.kpn.assignment.backend.controller;
 
+import com.kpn.assignment.backend.exception.CustomerNotFoundException;
 import com.kpn.assignment.backend.model.Customer;
 import com.kpn.assignment.backend.service.CustomerService;
 import jakarta.validation.Valid;
@@ -77,9 +78,9 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
-        return customerService.getCustomerById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Customer customer = customerService.getCustomerById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer with id " + id + " not found"));
+        return ResponseEntity.ok(customer);
     }
 
     @PutMapping("/{id}")
@@ -98,12 +99,16 @@ public class CustomerController {
             Customer saved = customerService.saveCustomer(customer);
             return ResponseEntity.ok(saved);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new CustomerNotFoundException("Customer with id " + id + " not found");
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+        if (customerService.getCustomerById(id).isEmpty()) {
+            throw new CustomerNotFoundException("Customer with id " + id + " not found");
+        }
+    
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
