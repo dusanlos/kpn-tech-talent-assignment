@@ -42,7 +42,7 @@ It allows users to create, read, update, and delete (CRUD) customers in a secure
 
 4. The backend API will be available at:  
     ```
-    http://localhost:8080
+    http://localhost:8080 (port may differ depending on your setup)
     ```
 
 ### Frontend Setup
@@ -63,5 +63,5 @@ It allows users to create, read, update, and delete (CRUD) customers in a secure
 
 4. Open your browser at:  
     ```
-    http://localhost:5173
+    http://localhost:5173 (port may differ depending on your setup)
     ```
