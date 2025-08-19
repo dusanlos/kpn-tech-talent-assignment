@@ -5,6 +5,8 @@
 This project is a customer management application developed as part of the KPN assignment.  
 It allows users to create, read, update, and delete (CRUD) customers in a secure and structured way.
 
+**Note:** The main focus of this project was on the backend implementation.
+
 ### Key Features
 - Manage customer data (first name, last name, email, phone number)
 - Form validation and error handling
