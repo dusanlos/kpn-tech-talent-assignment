@@ -12,17 +12,16 @@ It allows users to create, read, update, and delete (CRUD) customers in a secure
 - Built with Spring Boot (backend) and React (frontend)
 
 ## Technology Stack
-- **Backend:** Spring Boot (Java 23)  
-- **Frontend:** React 18  
-- **Database:** (Your DB here, e.g., MySQL/PostgreSQL)  
+- **Backend:** Spring Boot (Java 17)  
+- **Frontend:** React 19.1.1
+- **Database:** SQLite  
 - **Authentication:** JWT tokens  
 
 ## Getting Started
 
 ### Prerequisites
-- Java 23  
-- Node.js 18+ and npm  
-- Database setup (if not using in-memory DB)  
+- Java 17
+- Node.js 23+ and npm  
 
 ### Backend Setup
 1. Navigate to the backend directory:
