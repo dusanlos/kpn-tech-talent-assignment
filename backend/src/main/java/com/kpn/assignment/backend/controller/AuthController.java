@@ -84,7 +84,7 @@ public class AuthController {
             User user = new User();
             user.setUsername(username);
             user.setPassword(passwordEncoder.encode(password));
-            user.setRole(role);
+            user.setRole("ROLE_" + role);
             userRepository.save(user);
 
             return ResponseEntity.ok(Map.of("message", "User registered successfully"));

@@ -1,16 +1,14 @@
 package com.kpn.assignment.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import lombok.Data;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Data;
+import com.kpn.assignment.backend.exception.ValidPhoneNumber;
 
 @Entity
 @Data
 public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +27,7 @@ public class Customer {
     private String address;
 
     @NotBlank(message = "Phone number is required")
-    @Pattern(regexp = "^\\+?[0-9\\s\\-()]{7,20}$", message = "Phone number format is invalid")
+    @ValidPhoneNumber
     @Column(unique = true, nullable = false)
     private String phoneNumber;
 
