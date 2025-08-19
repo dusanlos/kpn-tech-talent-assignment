@@ -15,6 +15,7 @@ It allows users to create, read, update, and delete (CRUD) customers in a secure
 - Role-based access:
   - **Admin:** Can create, update, and delete customers
   - **User:** Can only create new customers
+- Database is automatically populated on running the backend
 
 ## Technology Stack
 - **Backend:** Spring Boot (Java 17)  
@@ -73,3 +74,4 @@ It allows users to create, read, update, and delete (CRUD) customers in a secure
 ### Using the Application
 - To use the app, simply **register an account** and **log in**.
 - Depending on your role (admin or user), you will have access to different customer management features.
+- The database is automatically populated when the backend runs.
