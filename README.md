@@ -12,6 +12,9 @@ It allows users to create, read, update, and delete (CRUD) customers in a secure
 - Form validation and error handling
 - Secure API requests using token-based authentication
 - Built with Spring Boot (backend) and React (frontend)
+- Role-based access:
+  - **Admin:** Can create, update, and delete customers
+  - **User:** Can only create new customers
 
 ## Technology Stack
 - **Backend:** Spring Boot (Java 17)  
@@ -66,3 +69,7 @@ It allows users to create, read, update, and delete (CRUD) customers in a secure
     ```
     http://localhost:5173 (port may differ depending on your setup)
     ```
+
+### Using the Application
+- To use the app, simply **register an account** and **log in**.
+- Depending on your role (admin or user), you will have access to different customer management features.
