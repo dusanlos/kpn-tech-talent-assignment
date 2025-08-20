@@ -35,7 +35,7 @@ export class ApiService {
   }
 
   // --------------------
-  // Generic request handler
+  // Generic request handler (FIXED)
   // --------------------
   static async request(endpoint, options = {}, skipAuth = false) {
     const url = `${API_BASE_URL}${endpoint}`;
@@ -55,16 +55,26 @@ export class ApiService {
 
     try {
       const response = await fetch(url, config);
-      let responseData = null;
 
-      try {
+      // DELETE or 204 No Content → no body to parse
+      if (response.status === 204 || options.method === 'DELETE') {
+        if (!response.ok) {
+          throw { status: response.status, message: response.statusText };
+        }
+        return null;
+      }
+
+      // Detect response type once
+      const contentType = response.headers.get('content-type');
+      let responseData;
+
+      if (contentType && contentType.includes('application/json')) {
         responseData = await response.json();
-      } catch {
+      } else {
         responseData = await response.text();
       }
 
       if (!response.ok) {
-        // Normalize error message
         let message;
         if (responseData && typeof responseData === 'object') {
           message = Object.entries(responseData)
@@ -74,12 +84,10 @@ export class ApiService {
           message = responseData || `HTTP ${response.status}`;
         }
         console.error('API error:', message);
-
-        // Throw normalized error for frontend
         throw { status: response.status, message };
       }
 
-      return response.status === 204 ? null : responseData;
+      return responseData;
     } catch (error) {
       console.error('Request failed:', error);
       if (error.status && error.message) throw error;
