@@ -115,7 +115,7 @@ class AuthControllerTest {
 
         assertThat(savedUser.getUsername()).isEqualTo(username);
         assertThat(savedUser.getPassword()).isEqualTo("encodedPass");
-        assertThat(savedUser.getRole()).isEqualTo("USER");
+        assertThat(savedUser.getRole()).isEqualTo("ROLE_USER");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         Map<String, Object> body = (Map<String, Object>) response.getBody();
